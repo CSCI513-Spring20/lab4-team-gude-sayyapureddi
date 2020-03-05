@@ -26,4 +26,9 @@ class Furniture implements Serializable, HouseEntity {
 	public int countContents() {
 		return 1;
 	}    
+	@Override
+	public void add(HouseEntity houseEntity) {
+		// TODO Auto-generated method stub
+		
+	}    
 }

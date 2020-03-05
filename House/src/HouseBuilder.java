@@ -15,42 +15,38 @@ import javafx.stage.Stage;
  * actually "show" the main scene.  We just need the application for the fileChooser.
  */
 public class HouseBuilder extends Application{
+	HouseFactory areaFactory = new HouseAreaFactory();
+	HouseEntity house = areaFactory.createHouse("House");
+	FurnitureFactory furniture = new FurnitureFactory();
 	
-	HouseArea house ;
-	/**
-	 * Manually construct a house
-	 */
 	public void buildHouse(){
-		Furniture block1 = new Furniture("Sink");
-        Furniture block2 = new Furniture("Counter");
-        Furniture block3 = new Furniture("Bed");
-        Furniture block4 = new Furniture("Dresser");
-        Furniture block5 = new Furniture("Bathtub");
-
-        //Initialize composite structures
-        HouseArea structure = new HouseArea("Kitchen");
-        HouseArea structure1 = new HouseArea("Bedroom");
-        HouseArea structure2 = new HouseArea("Bathroom");
-        HouseArea structure3 = new HouseArea("Downstairs");
-        HouseArea structure4 = new HouseArea("Upstairs");
-        house = new HouseArea("House");
+		HouseEntity downstairs = areaFactory.createHouse("Downstairs");
+		HouseEntity kitchen = areaFactory.createHouse("Kitchen");
+		HouseEntity upstairs = areaFactory.createHouse("Upstairs");
+		HouseEntity bedroom = areaFactory.createHouse("Bedroom");
+		HouseEntity bathroom = areaFactory.createHouse("Bathroom");
+		
+		HouseEntity sink = furniture.createHouse("Sink");
+		HouseEntity counter = furniture.createHouse("Counter");
+		HouseEntity bed = furniture.createHouse("Bed");
+		HouseEntity dresser = furniture.createHouse("Dresser");
+		HouseEntity bathtub = furniture.createHouse("Bathtub");
+		
+		//build the house
+		house.add(downstairs);
+		house.add(upstairs);
+		
+		upstairs.add(bedroom);
+		upstairs.add(bathroom);
         
-        //Build the house
-        house.add(structure3);
-        house.add(structure4);
+		downstairs.add(kitchen);
         
-        structure4.add(structure1);
-        structure4.add(structure2);
-        
-        structure3.add(structure);
-        
-        structure.add(block1);
-        structure.add(block2);
-        structure1.add(block3);
-        structure1.add(block4);
-        structure2.add(block5);     
+		kitchen.add(sink);
+		kitchen.add(counter);
+		bedroom.add(bed);
+		bedroom.add(dresser);
+		bathroom.add(bathtub);     
 	}
-	
 	/**
 	 * Save using serialization
 	 * @param fileName
@@ -76,7 +72,7 @@ public class HouseBuilder extends Application{
 	}
 	
 	public HouseArea getHouse(){
-		return house;
+		return (HouseArea) house;
 	}
 	
 	
